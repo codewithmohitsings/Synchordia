@@ -1,0 +1,11 @@
+{
+  "name": "Synchordia",
+  "description": "A hands-free, web-based musical instrument that translates physical gestures into continuous, polyphonic musical chords.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
