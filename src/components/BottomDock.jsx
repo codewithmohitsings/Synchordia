@@ -117,7 +117,7 @@ export default function BottomDock({
             onChange={onVolumeChange}
             aria-label="Instrument volume"
             title="Instrument volume"
-            className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-neutral-800/80 accent-amber-500 [&::-webkit-slider-runnable-track]:h-1.5 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-neutral-800/80 [&::-webkit-slider-thumb]:-mt-[5px] [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-amber-400/70 [&::-webkit-slider-thumb]:bg-[#f4c16c] [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(245,158,11,0.45)]"
+            className="volume-slider h-1.5 w-full cursor-pointer appearance-none rounded-full bg-neutral-800/80 accent-amber-500"
           />
         </div>
 
