@@ -7,6 +7,27 @@ export function useAudioEngine() {
 
   const instrumentsRef = useRef({});
   const currentNotesRef = useRef([]);
+  const instrumentVolumeRef = useRef(null);
+  const masterLimiterRef = useRef(null);
+  const masterVolumeValueRef = useRef(0.8);
+
+  const volumeToDb = useCallback((value) => {
+    const clamped = Math.min(1, Math.max(0, value));
+    return -60 + clamped * 60;
+  }, []);
+
+  const setInstrumentVolume = useCallback(
+    (value) => {
+      const clamped = Math.min(1, Math.max(0, value));
+      masterVolumeValueRef.current = clamped;
+      const nextDb = volumeToDb(clamped);
+
+      if (instrumentVolumeRef.current) {
+        instrumentVolumeRef.current.volume.value = nextDb;
+      }
+    },
+    [volumeToDb],
+  );
 
   const initAudio = useCallback(async () => {
     if (isReady) return;
@@ -14,6 +35,12 @@ export function useAudioEngine() {
     await Tone.start();
 
     const limiter = new Tone.Limiter(-2).toDestination();
+    const instrumentVolume = new Tone.Volume(0);
+    instrumentVolume.volume.value = volumeToDb(masterVolumeValueRef.current);
+    instrumentVolume.connect(limiter);
+
+    masterLimiterRef.current = limiter;
+    instrumentVolumeRef.current = instrumentVolume;
 
     const harmonium = new Tone.Sampler({
       urls: {
@@ -23,7 +50,7 @@ export function useAudioEngine() {
       baseUrl: 'https://tonejs.github.io/audio/casio/',
       attack: 0.3,
       release: 0.5,
-    }).connect(limiter);
+    }).connect(instrumentVolume);
 
     const padReverb = new Tone.Reverb({
       decay: 4,
@@ -40,7 +67,7 @@ export function useAudioEngine() {
         release: 0.5,
       },
       volume: -6,
-    }).chain(padChorus, padReverb, limiter);
+    }).chain(padChorus, padReverb, instrumentVolume);
 
     const stringFilter = new Tone.Filter(800, 'lowpass');
     const stringLfo = new Tone.LFO(0.5, 400, 1200).start();
@@ -55,7 +82,7 @@ export function useAudioEngine() {
         release: 0.5,
       },
       volume: -8,
-    }).chain(stringFilter, limiter);
+    }).chain(stringFilter, instrumentVolume);
 
     instrumentsRef.current = {
       harmonium,
@@ -64,7 +91,7 @@ export function useAudioEngine() {
     };
 
     setIsReady(true);
-  }, [isReady]);
+  }, [isReady, volumeToDb]);
 
   const playChord = useCallback(
     (notes) => {
@@ -129,6 +156,14 @@ export function useAudioEngine() {
           instrument.dispose?.();
         }
       });
+      if (instrumentVolumeRef.current) {
+        instrumentVolumeRef.current.dispose();
+        instrumentVolumeRef.current = null;
+      }
+      if (masterLimiterRef.current) {
+        masterLimiterRef.current.dispose();
+        masterLimiterRef.current = null;
+      }
       instrumentsRef.current = {};
       currentNotesRef.current = [];
       setIsReady(false);
@@ -142,5 +177,6 @@ export function useAudioEngine() {
     stopAll,
     activeInstrumentId,
     changeInstrument,
+    setInstrumentVolume,
   };
 }

@@ -16,8 +16,19 @@ export default function BottomDock({
   initAudio,
   activeInstrumentId,
   changeInstrument,
+  setInstrumentVolume,
 }) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [volume, setVolume] = useState(0.8);
+
+  const onVolumeChange = (e) => {
+    const nextVolume = parseFloat(e.target.value);
+    setVolume(nextVolume);
+    if (!isAudioReady) {
+      initAudio();
+    }
+    setInstrumentVolume(nextVolume);
+  };
 
   return (
     <div className="fixed bottom-4 md:bottom-10 left-1/2 flex w-auto -translate-x-1/2 flex-row items-center gap-2 rounded-full border border-neutral-800/60 bg-[#16120f]/60 py-4 backdrop-blur-xl z-50 shadow-2xl transition-all duration-300">
@@ -93,6 +104,21 @@ export default function BottomDock({
               {isTracking ? `TRK [${activeFingerCount}]` : 'IDLE'}
             </span>
           </div>
+        </div>
+
+        <div className="flex flex-col gap-1 w-32 shrink-0">
+          <span className="text-[9px] uppercase tracking-[0.4em] text-neutral-500">VOLUME</span>
+          <input
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value={volume}
+            onChange={onVolumeChange}
+            aria-label="Instrument volume"
+            title="Instrument volume"
+            className="h-1.5 w-full cursor-pointer appearance-none rounded-full bg-neutral-800/80 accent-amber-500 [&::-webkit-slider-runnable-track]:h-1.5 [&::-webkit-slider-runnable-track]:rounded-full [&::-webkit-slider-runnable-track]:bg-neutral-800/80 [&::-webkit-slider-thumb]:-mt-[5px] [&::-webkit-slider-thumb]:h-4 [&::-webkit-slider-thumb]:w-4 [&::-webkit-slider-thumb]:appearance-none [&::-webkit-slider-thumb]:rounded-full [&::-webkit-slider-thumb]:border [&::-webkit-slider-thumb]:border-amber-400/70 [&::-webkit-slider-thumb]:bg-[#f4c16c] [&::-webkit-slider-thumb]:shadow-[0_0_10px_rgba(245,158,11,0.45)]"
+          />
         </div>
 
         <div className="h-8 w-px bg-neutral-800/60 shrink-0 ml-4" />

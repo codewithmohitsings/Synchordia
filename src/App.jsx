@@ -25,7 +25,7 @@ export default function App() {
     }
   }, [isTracking, isRecording, toggleRecording]);
 
-  const { isReady: isAudioReady, initAudio, playChord, stopAll, activeInstrumentId, changeInstrument } = useAudioEngine();
+  const { isReady: isAudioReady, initAudio, playChord, stopAll, activeInstrumentId, changeInstrument, setInstrumentVolume } = useAudioEngine();
 
   const [hasPermission, setHasPermission] = useState(null);
 
@@ -102,6 +102,7 @@ export default function App() {
         initAudio={initAudio}
         activeInstrumentId={activeInstrumentId}
         changeInstrument={changeInstrument}
+        setInstrumentVolume={setInstrumentVolume}
       />
 
       <div className="grain-overlay pointer-events-none absolute inset-0 opacity-[0.025] mix-blend-overlay" />
