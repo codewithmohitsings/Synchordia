@@ -1,4 +1,4 @@
-import { CircleDashed, Settings, Square, Radio, ChevronDown } from 'lucide-react';
+import { CircleDashed, Settings, Square, Radio, ChevronDown, Info } from 'lucide-react';
 import { useState } from 'react';
 import { AVAILABLE_SCALES } from '../utils/music.js';
 
@@ -17,6 +17,7 @@ export default function BottomDock({
   activeInstrumentId,
   changeInstrument,
   setInstrumentVolume,
+  onOpenHelp,
 }) {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [volume, setVolume] = useState(0.8);
@@ -165,6 +166,15 @@ export default function BottomDock({
           }`}
         >
           <Settings className="h-5 w-5" />
+        </button>
+
+        <button
+          onClick={onOpenHelp}
+          aria-label="Open help"
+          title="Open help"
+          className="flex h-12 w-12 items-center justify-center rounded-full border transition-colors border-neutral-700/50 bg-neutral-800/30 text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200"
+        >
+          <Info className="h-5 w-5" />
         </button>
       </div>
     </div>

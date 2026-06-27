@@ -4,12 +4,13 @@ import { useHandTracking } from './hooks/useHandTracking.js';
 import { useAudioEngine } from './hooks/useAudioEngine.js';
 import { useRecorder } from './hooks/useRecorder.js';
 import { getChordsForScale, transposeNotes } from './utils/music.js';
-import { BottomDock, ChordRing, PerformanceCanvas } from './components/index.js';
+import { BottomDock, ChordRing, PerformanceCanvas, InstructionsModal } from './components/index.js';
 
 export default function App() {
   const [isTracking, setIsTracking] = useState(false);
   const [selectedScale, setSelectedScale] = useState('C');
   const [transpose, setTranspose] = useState(0);
+  const [showHelp, setShowHelp] = useState(false);
 
   const { majorChords, minorChords, allChords } = useMemo(() => {
     const { major, minor } = getChordsForScale(selectedScale);
@@ -103,7 +104,10 @@ export default function App() {
         activeInstrumentId={activeInstrumentId}
         changeInstrument={changeInstrument}
         setInstrumentVolume={setInstrumentVolume}
+        onOpenHelp={() => setShowHelp(true)}
       />
+
+      <InstructionsModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
 
       <div className="grain-overlay pointer-events-none absolute inset-0 opacity-[0.025] mix-blend-overlay" />
     </div>
