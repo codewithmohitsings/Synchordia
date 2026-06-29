@@ -49,6 +49,7 @@ export function useAudioEngine() {
       },
       baseUrl: 'https://tonejs.github.io/audio/casio/',
       attack: 0.3,
+      sustain: 1.0,
       release: 0.5,
     }).connect(instrumentVolume);
 

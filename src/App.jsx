@@ -10,7 +10,15 @@ export default function App() {
   const [isTracking, setIsTracking] = useState(false);
   const [selectedScale, setSelectedScale] = useState('C');
   const [transpose, setTranspose] = useState(0);
-  const [showHelp, setShowHelp] = useState(false);
+  const [showHelp, setShowHelp] = useState(() => {
+    const hasVisited = localStorage.getItem('synchordia_visited');
+    return !hasVisited;
+  });
+
+  const closeHelpModal = () => {
+    localStorage.setItem('synchordia_visited', 'true');
+    setShowHelp(false);
+  };
 
   const { majorChords, minorChords, allChords } = useMemo(() => {
     const { major, minor } = getChordsForScale(selectedScale);
@@ -107,7 +115,7 @@ export default function App() {
         onOpenHelp={() => setShowHelp(true)}
       />
 
-      <InstructionsModal isOpen={showHelp} onClose={() => setShowHelp(false)} />
+     <InstructionsModal isOpen={showHelp} onClose={closeHelpModal} />
 
       <div className="grain-overlay pointer-events-none absolute inset-0 opacity-[0.025] mix-blend-overlay" />
     </div>

@@ -26,7 +26,7 @@ export default function InstructionsModal({ isOpen, onClose }) {
           <section>
             <h3 className="text-[10px] md:text-[11px] uppercase tracking-[0.4em] text-neutral-500">HOW TO PLAY</h3>
             <p className="mt-2 text-sm md:text-[15px] leading-relaxed text-neutral-250 text-neutral-300">
-              Show your hand to the camera. Holding up 1 to 3 fingers triggers Major chords, and holding up 4 to 6 fingers triggers Minor chords.
+              Show your hand to the camera. Holding up 1,2,3 fingers triggers Major chords, and holding up 4,5, 6 fingers triggers Minor chords.
             </p>
           </section>
 
