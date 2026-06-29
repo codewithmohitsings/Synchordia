@@ -1,6 +1,8 @@
 **Synchordia**
 A browser-based polyphonic instrument controlled by real-time hand gestures.
-Synchordia bridges the gap between computer vision and audio synthesis, allowing users to play continuous, cinematic musical chords using just their webcam and hand gestures. Built entirely with client-side web technologies, it features zero-latency audio routing, a glassmorphic UI, and built-in performance recording.
+Synchordia bridges the gap between computer vision and audio synthesis, allowing users to play continuous, cinematic musical chords using just their webcam and hand gestures. It features zero-latency audio routing, a glassmorphic UI, and built-in performance recording.
+You can switch in 3 different instrument sounds: Harmonium, Ambient Pads & Strings. (Harmonium one is not working for some reason I'll update this once it starts working)
+If you're a struggling artist and love exploring musical stuffs, you'd definitely going to love this.
 
 Note: Camera and microphone permissions are strictly required for the engines to initialize.
 
