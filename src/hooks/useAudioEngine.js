@@ -42,21 +42,28 @@ export function useAudioEngine() {
     masterLimiterRef.current = limiter;
     instrumentVolumeRef.current = instrumentVolume;
 
-    const harmonium = new Tone.Sampler({
-      urls: {
-        A1: 'A1.mp3',
-        A2: 'A2.mp3',
+    const harmonium = new Tone.PolySynth(Tone.Synth, {
+      oscillator: {
+        type: "fatsawtooth",
+        count: 3,      
+        spread: 20       
       },
-      baseUrl: 'https://tonejs.github.io/audio/casio/',
-      attack: 0.3,
-      sustain: 1.0,
-      release: 0.5,
+      envelope: {
+        attack: 0.05,
+        decay: 0.1,
+        sustain: 0.9,
+        release: 1.2
+      }
     }).connect(instrumentVolume);
 
+    // Keep your reverb exactly as it is!
     const padReverb = new Tone.Reverb({
       decay: 4,
       wet: 0.6,
     });
+    
+    // Make sure to route the harmonium through the reverb if you haven't already:
+    harmonium.connect(padReverb);
     const padChorus = new Tone.Chorus(4, 2.5, 0.5).start();
 
     const ambientPad = new Tone.PolySynth(Tone.Synth, {
