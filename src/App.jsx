@@ -68,7 +68,7 @@ export default function App() {
     <div className="relative min-h-screen w-full bg-app-bg text-neutral-200 overflow-hidden font-sans selection:bg-amber-500/30">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-app-glow)_0%,transparent_65%)] opacity-90 pointer-events-none" />
 
-      <header className="absolute top-4 md:top-8 left-4 md:left-12 z-20 pointer-events-none">
+      <header role="banner" className="absolute top-4 md:top-8 left-4 md:left-12 z-20 pointer-events-none">
         <h1 className="font-display text-xs md:text-sm font-semibold uppercase tracking-[0.4em] text-neutral-300 opacity-90 flex items-center gap-3 md:gap-4">
           <Disc3 className="w-3 h-3 md:w-4 md:h-4 opacity-50" />
           Synchordia
