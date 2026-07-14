@@ -6,37 +6,53 @@ export function useHandTracking(isTracking) {
   const [activeFingerCount, setActiveFingerCount] = useState(0);
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
+  const ctxRef = useRef(null);
   const bufferRef = useRef([]);
   const REQUIRED_STABLE_FRAMES = 3;
   const currentCountRef = useRef(0);
 
+  const getCtx = () => {
+    if (!ctxRef.current && canvasRef.current) {
+      ctxRef.current = canvasRef.current.getContext('2d');
+    }
+    return ctxRef.current;
+  };
+
   const onResults = useCallback((results) => {
-    if (canvasRef.current && videoRef.current) {
-      const canvasCtx = canvasRef.current.getContext('2d');
-      if (canvasCtx) {
-        canvasCtx.save();
-        canvasCtx.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-        canvasCtx.translate(canvasRef.current.width, 0);
-        canvasCtx.scale(-1, 1);
+    const canvas = canvasRef.current;
+    const video = videoRef.current;
+    if (!canvas || !video) return;
 
-        if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
-          for (const landmarks of results.multiHandLandmarks) {
-            canvasCtx.strokeStyle = 'rgba(245, 158, 11, 0.5)';
-            canvasCtx.lineWidth = 2;
+    const canvasCtx = getCtx();
+    if (!canvasCtx) return;
 
-            for (const landmark of landmarks) {
-              const x = landmark.x * canvasRef.current.width;
-              const y = landmark.y * canvasRef.current.height;
-              canvasCtx.beginPath();
-              canvasCtx.arc(x, y, 3, 0, 2 * Math.PI);
-              canvasCtx.fillStyle = 'rgba(245, 158, 11, 0.8)';
-              canvasCtx.fill();
-            }
-          }
+    const canvasWidth = canvas.width;
+    const canvasHeight = canvas.height;
+
+    canvasCtx.save();
+    canvasCtx.clearRect(0, 0, canvasWidth, canvasHeight);
+    canvasCtx.translate(canvasWidth, 0);
+    canvasCtx.scale(-1, 1);
+
+    const landmarksList = results.multiHandLandmarks;
+    if (landmarksList && landmarksList.length > 0) {
+      canvasCtx.strokeStyle = 'rgba(245, 158, 11, 0.5)';
+      canvasCtx.lineWidth = 2;
+      canvasCtx.fillStyle = 'rgba(245, 158, 11, 0.8)';
+
+      for (let i = 0; i < landmarksList.length; i++) {
+        const landmarks = landmarksList[i];
+        canvasCtx.beginPath();
+        for (let j = 0; j < landmarks.length; j++) {
+          const x = landmarks[j].x * canvasWidth;
+          const y = landmarks[j].y * canvasHeight;
+          canvasCtx.moveTo(x, y);
+          canvasCtx.arc(x, y, 3, 0, 2 * Math.PI);
         }
-        canvasCtx.restore();
+        canvasCtx.fill();
       }
     }
+    canvasCtx.restore();
 
     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
       let totalCount = 0;
@@ -135,6 +151,7 @@ export function useHandTracking(isTracking) {
       bufferRef.current = [];
       setActiveFingerCount(0);
       currentCountRef.current = 0;
+      ctxRef.current = null;
     };
   }, [isTracking, onResults]);
 

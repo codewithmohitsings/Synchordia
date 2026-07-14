@@ -20,9 +20,12 @@ export default function App() {
     setShowHelp(false);
   };
 
-  const { majorChords, minorChords, allChords } = useMemo(() => {
+  const { majorChords, minorChords, chordMap } = useMemo(() => {
     const { major, minor } = getChordsForScale(selectedScale);
-    return { majorChords: major, minorChords: minor, allChords: [...major, ...minor] };
+    const map = new Map();
+    for (const chord of major) map.set(chord.fingers, chord);
+    for (const chord of minor) map.set(chord.fingers, chord);
+    return { majorChords: major, minorChords: minor, chordMap: map };
   }, [selectedScale]);
 
   const { activeFingerCount, videoRef, canvasRef } = useHandTracking(isTracking);
@@ -52,7 +55,7 @@ export default function App() {
     if (!isAudioReady) return;
 
     if (activeFingerCount > 0 && isTracking) {
-      const activeChord = allChords.find((c) => c.fingers === activeFingerCount);
+      const activeChord = chordMap.get(activeFingerCount);
       if (activeChord) {
         const transposedNotes = transposeNotes(activeChord.notes, transpose);
         playChord(transposedNotes);
@@ -62,7 +65,7 @@ export default function App() {
     } else {
       stopAll();
     }
-  }, [activeFingerCount, isTracking, isAudioReady, playChord, stopAll, allChords, transpose]);
+  }, [activeFingerCount, isTracking, isAudioReady, playChord, stopAll, chordMap, transpose]);
 
   return (
     <div className="relative min-h-screen w-full bg-app-bg text-neutral-200 overflow-hidden font-sans selection:bg-amber-500/30">

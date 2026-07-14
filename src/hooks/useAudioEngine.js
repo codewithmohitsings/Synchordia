@@ -112,12 +112,14 @@ export function useAudioEngine() {
       const notesToRelease = prevNotes.filter((n) => !notes.includes(n));
       const notesToAttack = notes.filter((n) => !prevNotes.includes(n));
 
+      const now = Tone.now();
+
       if (notesToRelease.length > 0) {
-        instrument.triggerRelease(notesToRelease, Tone.now());
+        instrument.triggerRelease(notesToRelease, now);
       }
 
       if (notesToAttack.length > 0) {
-        instrument.triggerAttack(notesToAttack, Tone.now());
+        instrument.triggerAttack(notesToAttack, now);
       }
 
       currentNotesRef.current = notes;
@@ -129,16 +131,18 @@ export function useAudioEngine() {
     (id) => {
       if (id === activeInstrumentId) return;
 
+      const now = Tone.now();
+
       if (isReady && currentNotesRef.current.length > 0) {
         const oldInstrument = instrumentsRef.current[activeInstrumentId];
         const newInstrument = instrumentsRef.current[id];
 
         if (oldInstrument) {
-          oldInstrument.triggerRelease(currentNotesRef.current, Tone.now());
+          oldInstrument.triggerRelease(currentNotesRef.current, now);
         }
 
         if (newInstrument) {
-          newInstrument.triggerAttack(currentNotesRef.current, Tone.now());
+          newInstrument.triggerAttack(currentNotesRef.current, now);
         }
       }
 
@@ -147,7 +151,7 @@ export function useAudioEngine() {
     [isReady, activeInstrumentId],
   );
 
-  const stopAll = useCallback(() => {
+const stopAll = useCallback(() => {
     if (!isReady) return;
     const instrument = instrumentsRef.current[activeInstrumentId];
     if (instrument && currentNotesRef.current.length > 0) {
