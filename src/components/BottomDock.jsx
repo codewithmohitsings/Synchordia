@@ -32,7 +32,7 @@ export default function BottomDock({
   };
 
   return (
-    <div className="fixed bottom-4 md:bottom-10 left-1/2 flex w-auto -translate-x-1/2 flex-row items-center gap-2 rounded-full border border-neutral-800/60 bg-[#16120f]/60 py-4 backdrop-blur-xl z-50 shadow-2xl transition-all duration-300">
+    <div role="region" aria-label="Instrument controls" className="fixed bottom-4 md:bottom-10 left-1/2 flex w-auto -translate-x-1/2 flex-row items-center gap-2 rounded-full border border-neutral-800/60 bg-[#16120f]/60 py-4 backdrop-blur-xl z-50 shadow-2xl transition-all duration-300">
       <div
         className={`flex flex-row items-center overflow-hidden transition-all duration-300 ease-in-out shrink-0 ${
           isSettingsOpen ? 'max-w-3xl opacity-100 px-8 gap-8 md:gap-12' : 'max-w-0 opacity-0 px-0 gap-0'
@@ -133,7 +133,7 @@ export default function BottomDock({
           }}
           aria-label={isTracking ? 'Stop tracking' : 'Start tracking'}
           title={isTracking ? 'Stop tracking' : 'Start tracking'}
-          className={`flex h-12 w-12 items-center justify-center rounded-full border transition-all ${
+          className={`flex h-12 w-12 items-center justify-center rounded-full border transition-all focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none ${
             isTracking
               ? 'border-amber-500/30 bg-amber-500/10 text-amber-500'
               : 'border-neutral-700/50 bg-neutral-800/30 text-neutral-400 hover:text-neutral-200'
@@ -146,7 +146,7 @@ export default function BottomDock({
           onClick={toggleRecording}
           aria-label={isRecording ? 'Stop recording' : 'Start recording'}
           title={isRecording ? 'Stop recording' : 'Start recording'}
-          className={`flex h-14 w-14 items-center justify-center rounded-full border transition-all duration-300 ${
+          className={`flex h-14 w-14 items-center justify-center rounded-full border transition-all duration-300 focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none ${
             isRecording
               ? 'border-red-500/40 bg-red-500/10 text-red-500 hover:bg-red-500/20 shadow-[0_0_20px_rgba(239,68,68,0.3)] animate-pulse'
               : 'border-neutral-700/50 bg-neutral-800/30 text-neutral-400 hover:text-neutral-200'
@@ -159,7 +159,7 @@ export default function BottomDock({
           onClick={() => setIsSettingsOpen(!isSettingsOpen)}
           aria-label={isSettingsOpen ? 'Close settings' : 'Open settings'}
           title={isSettingsOpen ? 'Close settings' : 'Open settings'}
-          className={`flex h-12 w-12 items-center justify-center rounded-full border transition-colors ${
+          className={`flex h-12 w-12 items-center justify-center rounded-full border transition-colors focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none ${
             isSettingsOpen
               ? 'border-amber-500/50 bg-amber-500/10 text-amber-400 hover:bg-amber-500/20'
               : 'border-neutral-700/50 bg-neutral-800/30 text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200'
@@ -172,7 +172,7 @@ export default function BottomDock({
           onClick={onOpenHelp}
           aria-label="Open help"
           title="Open help"
-          className="flex h-12 w-12 items-center justify-center rounded-full border transition-colors border-neutral-700/50 bg-neutral-800/30 text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200"
+          className="flex h-12 w-12 items-center justify-center rounded-full border transition-colors border-neutral-700/50 bg-neutral-800/30 text-neutral-400 hover:bg-neutral-700/50 hover:text-neutral-200 focus-visible:ring-2 focus-visible:ring-amber-500 focus-visible:outline-none"
         >
           <Info className="h-5 w-5" />
         </button>

@@ -2,7 +2,7 @@ import { Camera } from 'lucide-react';
 
 export default function PerformanceCanvas({ hasPermission, videoRef, canvasRef }) {
   return (
-    <div className="relative w-full aspect-video max-w-5xl rounded-3xl border border-neutral-800/60 bg-black/40 shadow-2xl overflow-hidden backdrop-blur-sm">
+    <div role="region" aria-label="Camera preview and hand tracking overlay" className="relative w-full aspect-video max-w-5xl rounded-3xl border border-neutral-800/60 bg-black/40 shadow-2xl overflow-hidden backdrop-blur-sm">
       {hasPermission === false ? (
         <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 text-neutral-500">
           <Camera className="w-8 h-8 opacity-50" />

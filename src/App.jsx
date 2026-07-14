@@ -20,9 +20,12 @@ export default function App() {
     setShowHelp(false);
   };
 
-  const { majorChords, minorChords, allChords } = useMemo(() => {
+  const { majorChords, minorChords, chordMap } = useMemo(() => {
     const { major, minor } = getChordsForScale(selectedScale);
-    return { majorChords: major, minorChords: minor, allChords: [...major, ...minor] };
+    const map = new Map();
+    for (const chord of major) map.set(chord.fingers, chord);
+    for (const chord of minor) map.set(chord.fingers, chord);
+    return { majorChords: major, minorChords: minor, chordMap: map };
   }, [selectedScale]);
 
   const { activeFingerCount, videoRef, canvasRef } = useHandTracking(isTracking);
@@ -52,7 +55,7 @@ export default function App() {
     if (!isAudioReady) return;
 
     if (activeFingerCount > 0 && isTracking) {
-      const activeChord = allChords.find((c) => c.fingers === activeFingerCount);
+      const activeChord = chordMap.get(activeFingerCount);
       if (activeChord) {
         const transposedNotes = transposeNotes(activeChord.notes, transpose);
         playChord(transposedNotes);
@@ -62,13 +65,13 @@ export default function App() {
     } else {
       stopAll();
     }
-  }, [activeFingerCount, isTracking, isAudioReady, playChord, stopAll, allChords, transpose]);
+  }, [activeFingerCount, isTracking, isAudioReady, playChord, stopAll, chordMap, transpose]);
 
   return (
     <div className="relative min-h-screen w-full bg-app-bg text-neutral-200 overflow-hidden font-sans selection:bg-amber-500/30">
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--color-app-glow)_0%,transparent_65%)] opacity-90 pointer-events-none" />
 
-      <header className="absolute top-4 md:top-8 left-4 md:left-12 z-20 pointer-events-none">
+      <header role="banner" className="absolute top-4 md:top-8 left-4 md:left-12 z-20 pointer-events-none">
         <h1 className="font-display text-xs md:text-sm font-semibold uppercase tracking-[0.4em] text-neutral-300 opacity-90 flex items-center gap-3 md:gap-4">
           <Disc3 className="w-3 h-3 md:w-4 md:h-4 opacity-50" />
           Synchordia
