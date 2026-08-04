@@ -93,10 +93,7 @@ export function useAudioEngine() {
     }).chain(stringFilter, instrumentVolume);
 
     instrumentsRef.current = {
-      harmonium,
-      'ambient-pad': ambientPad,
-      'analog-strings': analogStrings,
-    };
+     
 
     setIsReady(true);
   }, [isReady, volumeToDb]);
