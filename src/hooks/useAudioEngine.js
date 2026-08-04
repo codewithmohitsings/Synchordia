@@ -67,12 +67,7 @@ export function useAudioEngine() {
     const padChorus = new Tone.Chorus(4, 2.5, 0.5).start();
 
     const ambientPad = new Tone.PolySynth(Tone.Synth, {
-      oscillator: { type: 'sine' },
-      envelope: {
-        attack: 0.3,
-        decay: 0.1,
-        sustain: 1.0,
-        release: 0.5,
+      
       },
       volume: -6,
     }).chain(padChorus, padReverb, instrumentVolume);
