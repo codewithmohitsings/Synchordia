@@ -48,11 +48,7 @@ export function useAudioEngine() {
         count: 3,      
         spread: 20       
       },
-      envelope: {
-        attack: 0.05,
-        decay: 0.1,
-        sustain: 0.9,
-        release: 1.2
+    
       }
     }).connect(instrumentVolume);
 
