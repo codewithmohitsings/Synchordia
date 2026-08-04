@@ -39,11 +39,7 @@ export default function App() {
   const [hasPermission, setHasPermission] = useState(null);
 
   useEffect(() => {
-    navigator.mediaDevices
-      .getUserMedia({ video: true })
-      .then((stream) => {
-        setHasPermission(true);
-        stream.getTracks().forEach((track) => track.stop());
+    
       })
       .catch(() => setHasPermission(false));
   }, []);
