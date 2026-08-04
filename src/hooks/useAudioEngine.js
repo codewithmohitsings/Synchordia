@@ -82,7 +82,12 @@ export function useAudioEngine() {
     stringLfo.connect(stringFilter.frequency);
 
     const analogStrings = new Tone.PolySynth(Tone.Synth, {
-     
+      oscillator: { type: 'sawtooth' },
+      envelope: {
+        attack: 0.3,
+        decay: 0.2,
+        sustain: 0.8,
+        release: 0.5,
       },
       volume: -8,
     }).chain(stringFilter, instrumentVolume);
