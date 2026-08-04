@@ -20,13 +20,3 @@ All you need is one hand and your webcam:
 **Pro-Tip:** Don't just flash your fingers quickly. Hold your hand steady and let the synthesizer breathe. The instrument is designed with an "infinite sustain"—the chord will ring out beautifully for as long as you hold your fingers up.
 
 
-## Run Locally
-Want to explore the code or run the instrument on your own machine? 
-
-**Prerequisites:** Ensure you have [Node.js](https://nodejs.org/) installed.
-
-1. Clone the repository
-2. Install dependencies:
-   `npm install`
-3. Run the app:
-   `npm run dev`
