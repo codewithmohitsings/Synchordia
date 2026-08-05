@@ -53,12 +53,5 @@
     background: rgba(38, 38, 38, 0.8);
   }
 
-  .volume-slider::-moz-range-thumb {
-    height: 1rem;
-    width: 1rem;
-    border-radius: 9999px;
-    border: 1px solid rgba(251, 191, 36, 0.7);
-    background: #f4c16c;
-    box-shadow: 0 0 10px rgba(245, 158, 11, 0.45);
-  }
+ 
 }
