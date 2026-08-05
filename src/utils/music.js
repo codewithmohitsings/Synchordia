@@ -28,7 +28,9 @@ export function getChordsForScale(rootNote) {
   };
 
   const majorChords = [
-    
+    { id: 'I', note: triads[0], type: 'Major', fingers: 1, notes: getNotesWithOctave(triads[0], 4) },
+    { id: 'IV', note: triads[3], type: 'Major', fingers: 2, notes: getNotesWithOctave(triads[3], 3) },
+    { id: 'V', note: triads[4], type: 'Major', fingers: 3, notes: getNotesWithOctave(triads[4], 3) },
   ];
 
   const minorChords = [
